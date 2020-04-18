@@ -22,5 +22,6 @@ namespace ContactInformationCore.Web
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

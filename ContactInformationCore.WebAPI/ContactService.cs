@@ -3,6 +3,7 @@ using ContactInformationCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 
 namespace ContactInformationCore.WebAPI
 {
@@ -119,6 +120,31 @@ namespace ContactInformationCore.WebAPI
                                }).ToList();
 
             return ContactList;
+        }
+
+        public IQueryable<Contact> ShowAllBookingUser(string sortColumn, string sortColumnDir, string Search)
+        {
+            var IQueryableBooking = (from temp in _dataContext.Contacts
+                                     select new Contact
+                                     {
+                                         Id = temp.Id,
+                                         First_Name = temp.First_Name,
+                                         Last_Name = temp.Last_Name,
+                                         Email = temp.Email,
+                                         Phone_Number = temp.Phone_Number,
+                                         Status = temp.Status
+                                     });
+
+            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+            {
+                IQueryableBooking = IQueryableBooking.OrderBy(sortColumn + " " + sortColumnDir);
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                IQueryableBooking = IQueryableBooking.Where(m => m.Phone_Number == Search);
+            }
+
+            return IQueryableBooking;
         }
 
     }
