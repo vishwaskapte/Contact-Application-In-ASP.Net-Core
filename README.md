@@ -22,6 +22,8 @@ Added Unit Testing for additional help.
 3) xUnit for Unit Testing
 4) Web API
 5) Entity Framework Core (Code First Approach)
+6) Logging facility
+7) Validation
 
 
 <b>How to Create Database in SQL Server</b>
@@ -71,3 +73,14 @@ First Page After Login
 Unit Test case (Success State)
 
 ![Unit Test cases](https://user-images.githubusercontent.com/45562090/79687125-b303d480-8262-11ea-8887-c07ab0eb041e.png)
+
+
+Validation fired on Create Page
+
+![Validation](https://user-images.githubusercontent.com/45562090/79688348-67a1f400-826b-11ea-8890-4aab087b7009.png)
+
+Log Generated
+
+![LoggingText](https://user-images.githubusercontent.com/45562090/79688351-6a9ce480-826b-11ea-83d9-2ade34863e97.png)
+
+
