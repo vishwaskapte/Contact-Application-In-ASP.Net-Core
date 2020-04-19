@@ -48,12 +48,26 @@ Credentials
 
 <b>ScrenShots</b>
 
+Project Structure
+
 ![ProjectStructure](https://user-images.githubusercontent.com/45562090/79686927-75eb1280-8261-11ea-8602-2ab32aff1559.PNG)
+
+
+WEB API Swagger Page
 
 ![Swagger](https://user-images.githubusercontent.com/45562090/79686842-e180b000-8260-11ea-8306-cb19b18f436e.png)
 
+
+Login Page
+
 ![Login](https://user-images.githubusercontent.com/45562090/79686840-df1e5600-8260-11ea-9dbd-3efe4eee9044.png)
 
+
+First Page After Login
+
 ![Index](https://user-images.githubusercontent.com/45562090/79686836-db8acf00-8260-11ea-8c86-69b1ce798766.png)
+
+
+Unit Test case (Success State)
 
 ![Unit Test cases](https://user-images.githubusercontent.com/45562090/79687125-b303d480-8262-11ea-8887-c07ab0eb041e.png)
