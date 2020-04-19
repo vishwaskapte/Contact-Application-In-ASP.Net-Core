@@ -43,8 +43,8 @@ to create tables into DB.
 <b>How to Login</b>
 
 Credentials
-UserId - Admin
-Password - Admin
+1) UserId - Admin
+2) Password - Admin
 
 <b>ScrenShots</b>
 
@@ -55,3 +55,5 @@ Password - Admin
 ![Login](https://user-images.githubusercontent.com/45562090/79686840-df1e5600-8260-11ea-9dbd-3efe4eee9044.png)
 
 ![Index](https://user-images.githubusercontent.com/45562090/79686836-db8acf00-8260-11ea-8c86-69b1ce798766.png)
+
+![Unit Test cases](https://user-images.githubusercontent.com/45562090/79687125-b303d480-8262-11ea-8887-c07ab0eb041e.png)
