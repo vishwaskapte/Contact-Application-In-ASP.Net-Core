@@ -40,7 +40,18 @@ After Build Success
 3) Run Command Update-Database
 to create tables into DB.
 
+<b>How to Login</b>
 
+Credentials
+UserId - Admin
+Password - Admin
 
+<b>ScrenShots</b>
 
+![ProjectStructure](https://user-images.githubusercontent.com/45562090/79686927-75eb1280-8261-11ea-8602-2ab32aff1559.PNG)
 
+![Swagger](https://user-images.githubusercontent.com/45562090/79686842-e180b000-8260-11ea-8306-cb19b18f436e.png)
+
+![Login](https://user-images.githubusercontent.com/45562090/79686840-df1e5600-8260-11ea-9dbd-3efe4eee9044.png)
+
+![Index](https://user-images.githubusercontent.com/45562090/79686836-db8acf00-8260-11ea-8c86-69b1ce798766.png)
