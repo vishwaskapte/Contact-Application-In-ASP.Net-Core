@@ -10,17 +10,22 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Dynamic;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace ContactInformationCore.Web.Controllers
 {
     public class ContactController : Controller
     {
+        private readonly ILogger _logger;
+
         HttpClient client;
         //The URL of the WEB API Service
         string url = "https://localhost:44323/api/Contacts";
 
-        public ContactController()
+        public ContactController(ILoggerFactory logFactory)
         {
+            _logger = logFactory.CreateLogger<ContactController>();
+
             client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -28,6 +33,7 @@ namespace ContactInformationCore.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Log message in the HttpGet Contact Controller => Index() method");
             HttpResponseMessage responseMessage = await client.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -56,6 +62,7 @@ namespace ContactInformationCore.Web.Controllers
             HttpResponseMessage responseMessage = await client.PostAsync(url, contactContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _logger.LogInformation("New Contact has been Created ! Redirected to Index Page");
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Error");
@@ -67,6 +74,7 @@ namespace ContactInformationCore.Web.Controllers
             HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _logger.LogInformation(" Redirected to Details Page");
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
 
                 var contact = JsonConvert.DeserializeObject<Contact>(responseData);
@@ -86,6 +94,8 @@ namespace ContactInformationCore.Web.Controllers
 
                 var contact = JsonConvert.DeserializeObject<Contact>(responseData);
 
+                _logger.LogInformation(" Redirected to Edit Page");
+
                 return View(contact);
             }
             return View("Error");
@@ -99,6 +109,7 @@ namespace ContactInformationCore.Web.Controllers
             HttpResponseMessage responseMessage = await client.PutAsync(url + "/" + id, ContactContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _logger.LogInformation("User " + contacttoUpdate.First_Name + " " + "Edited Successfully !");
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Error");
@@ -125,6 +136,7 @@ namespace ContactInformationCore.Web.Controllers
             HttpResponseMessage responseMessage = await client.DeleteAsync(url + "/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _logger.LogInformation("User " + contact.First_Name + " " + "Deleted Successfully !");
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Error");

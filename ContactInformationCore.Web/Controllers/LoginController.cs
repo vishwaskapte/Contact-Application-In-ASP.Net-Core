@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ContactInformationCore.Model;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,9 +13,17 @@ namespace EventApplicationCore.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly ILogger _logger;
+
+        public LoginController(ILoggerFactory logFactory)
+        {
+            _logger = logFactory.CreateLogger<LoginController>();
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
+            _logger.LogInformation("Log message in the HttpGet Login Controller => Index() method");
             return View();
         }
 
@@ -24,6 +33,8 @@ namespace EventApplicationCore.Controllers
         {
             try
             {
+                _logger.LogInformation("Log message in the HttpPost Login Controller => Index() method");
+
                 if (!string.IsNullOrEmpty(loginViewModel.Username) && !string.IsNullOrEmpty(loginViewModel.Password))
                 {
                     var Username = loginViewModel.Username;
@@ -33,6 +44,7 @@ namespace EventApplicationCore.Controllers
 
                     if (result)
                     {
+                        _logger.LogInformation("Password Is Validated ! User Redirected to Admin Page");
                         return RedirectToAction("Index", "Contact", "Main");
                     }
                     else
@@ -54,6 +66,7 @@ namespace EventApplicationCore.Controllers
         {
             try
             {
+                _logger.LogInformation("User Session is Manually Terminated ! User Redirected to Login Page");
                 HttpContext.Session.Clear();
                 return RedirectToAction("Login", "Login");
             }
