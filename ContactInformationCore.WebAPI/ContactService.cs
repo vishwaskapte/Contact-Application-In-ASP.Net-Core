@@ -42,27 +42,20 @@ namespace ContactInformationCore.WebAPI
             }
         }
 
-        public void UpdateContact(Contact Contact)
+        public void UpdateContact(Contact ContacttoUpdate, Contact Contact)
         {
             try
-            {
-                if (Contact.First_Name != null)
+            { 
+                if (ContacttoUpdate != null)
                 {
-                    _dataContext.Entry(Contact).Property(x => x.First_Name).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Last_Name).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Email).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Phone_Number).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Status).IsModified = true;
-                    _dataContext.SaveChanges();
-                }
-                else
-                {
-                    _dataContext.Contacts.Attach(Contact);
-                    _dataContext.Entry(Contact).Property(x => x.First_Name).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Last_Name).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Email).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Phone_Number).IsModified = true;
-                    _dataContext.Entry(Contact).Property(x => x.Status).IsModified = true;
+                    Contact.Id = ContacttoUpdate.Id;
+                    Contact.First_Name = ContacttoUpdate.First_Name;
+                    Contact.Last_Name = ContacttoUpdate.Last_Name;
+                    Contact.Email = ContacttoUpdate.Email;
+                    Contact.Phone_Number = ContacttoUpdate.Phone_Number;
+                    Contact.Status = ContacttoUpdate.Status;
+
+                    //Commit the transaction
                     _dataContext.SaveChanges();
                 }
             }
@@ -122,30 +115,7 @@ namespace ContactInformationCore.WebAPI
             return ContactList;
         }
 
-        public IQueryable<Contact> ShowAllBookingUser(string sortColumn, string sortColumnDir, string Search)
-        {
-            var IQueryableBooking = (from temp in _dataContext.Contacts
-                                     select new Contact
-                                     {
-                                         Id = temp.Id,
-                                         First_Name = temp.First_Name,
-                                         Last_Name = temp.Last_Name,
-                                         Email = temp.Email,
-                                         Phone_Number = temp.Phone_Number,
-                                         Status = temp.Status
-                                     });
-
-            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            {
-                IQueryableBooking = IQueryableBooking.OrderBy(sortColumn + " " + sortColumnDir);
-            }
-            if (!string.IsNullOrEmpty(Search))
-            {
-                IQueryableBooking = IQueryableBooking.Where(m => m.Phone_Number == Search);
-            }
-
-            return IQueryableBooking;
-        }
+        
 
     }
 }

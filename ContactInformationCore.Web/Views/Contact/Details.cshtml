@@ -1,0 +1,48 @@
+﻿@model ContactInformationCore.Model.Contact
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Contact Details</h2>
+
+<div class="container">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.First_Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.First_Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Last_Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Last_Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone_Number)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone_Number)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

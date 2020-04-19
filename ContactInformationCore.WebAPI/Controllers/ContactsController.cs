@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ContactInformationCore.Interface;
+using ContactInformationCore.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ContactInformationCore.Model;
-using ContactInformationCore.WebAPI;
-using ContactInformationCore.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ContactInformationCore.WebAPI.Controllers
 {
@@ -46,20 +43,21 @@ namespace ContactInformationCore.WebAPI.Controllers
 
         // PUT: api/Contacts/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Contact contact)
+        public IActionResult Put(int id, [FromBody] Contact contactToUpdate)
         {
-            if (contact == null)
+            if (contactToUpdate == null)
             {
                 return BadRequest("Contact is null.");
             }
 
-            Contact contactToUpdate = _IContact.ContactByID(id);
+            Contact contact = _IContact.ContactByID(id);
+
             if (contactToUpdate == null)
             {
                 return NotFound("The Contact record couldn't be found.");
             }
 
-            _IContact.UpdateContact(contactToUpdate);
+            _IContact.UpdateContact(contactToUpdate,contact);
             return NoContent();
         }
 

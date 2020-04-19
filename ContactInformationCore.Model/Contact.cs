@@ -6,6 +6,11 @@ using System.Text;
 
 namespace ContactInformationCore.Model
 {
+    public enum Status
+    {
+        Activate = 1,
+        Deactivate = 2
+    }
     public class Contact
     {
         [Key]
@@ -19,6 +24,6 @@ namespace ContactInformationCore.Model
 
         public string Phone_Number { get; set; }
 
-        public bool Status { get; set; }
+        public Status Status { get; set; }
     }
 }

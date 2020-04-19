@@ -34,7 +34,7 @@ namespace ContactInformationCore.WebAPI
             string conn = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContaxt>(options => options.UseSqlServer(conn));
 
-            services.AddTransient<IContact, ContactService>();
+            services.AddScoped<IContact, ContactService>();
             //Added Swagger
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact API", Version = "v1" });

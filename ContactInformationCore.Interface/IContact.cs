@@ -12,7 +12,7 @@ namespace ContactInformationCore.Interface
         //IQueryable<Contact> ShowContact(string sortColumn, string sortColumnDir, string Search);
         int DeleteContact(int id);
         Contact ContactByID(int id);
-        void UpdateContact(Contact Contact);
+        void UpdateContact(Contact ContacttoUpdate, Contact Contact);
         //bool CheckEmailIsAlreadyExist(string DishName, string ContactType);
         List<Contact> GetAllContact();
         IEnumerable<Contact> ShowAllContact();

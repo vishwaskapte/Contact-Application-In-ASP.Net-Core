@@ -5,8 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ContactInformationCore.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq.Dynamic;
+using System.Text;
 
 namespace ContactInformationCore.Web.Controllers
 {
@@ -31,44 +34,100 @@ namespace ContactInformationCore.Web.Controllers
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
 
                 var contact = JsonConvert.DeserializeObject<List<Contact>>(responseData);
+                
+                //LoadAllContacts();
 
                 return View(contact);
             }
             return View("Error");
         }
 
-        //public JsonResult LoadAllContacts()
-        //{
-        //    try
-        //    {
-        //        var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
-        //        var start = Request.Form["start"].FirstOrDefault();
-        //        var length = Request.Form["length"].FirstOrDefault();
-        //        var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
-        //        var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-        //        var searchValue = Request.Form["search[value]"].FirstOrDefault();
+        public ActionResult Create()
+        {
+            return View(new Contact());
+        }
 
-        //        int pageSize = length != null ? Convert.ToInt32(length) : 0;
-        //        int skip = start != null ? Convert.ToInt32(start) : 0;
-        //        int recordsTotal = 0;
+        //The Post method
+        [HttpPost]
+        public async Task<ActionResult> Create(Contact contact)
+        {
+            string json = JsonConvert.SerializeObject(contact, Formatting.Indented);
+            HttpContent contactContent = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await client.PostAsync(url, contactContent);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error");
+        }
 
-        //        if (!string.IsNullOrEmpty(Convert.ToString("Admin")))
-        //        {
+        [HttpGet]
+        public async Task<ActionResult> Details(int id)
+        {
+            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
 
-        //            var v = _IBookingVenue.ShowAllBookingUser(sortColumn, sortColumnDir, searchValue, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
-        //            recordsTotal = v.Count();
-        //            var data = v.Skip(skip).Take(pageSize).ToList();
-        //            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-        //        }
-        //        else
-        //        {
-        //            return Json("Failed");
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+                var contact = JsonConvert.DeserializeObject<Contact>(responseData);
+
+                return View(contact);
+            }
+            return View("Error");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+
+                var contact = JsonConvert.DeserializeObject<Contact>(responseData);
+
+                return View(contact);
+            }
+            return View("Error");
+        }
+        //The PUT Method
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, Contact contacttoUpdate)
+        {
+            string json = JsonConvert.SerializeObject(contacttoUpdate, Formatting.Indented);
+            HttpContent ContactContent = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await client.PutAsync(url + "/" + id, ContactContent);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error");
+        }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+
+                var contact = JsonConvert.DeserializeObject<Contact>(responseData);
+
+                return View(contact);
+            }
+            return View("Error");
+        }
+
+        //The DELETE method
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id, Contact contact)
+        {
+            HttpResponseMessage responseMessage = await client.DeleteAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error");
+        }
     }
 }
