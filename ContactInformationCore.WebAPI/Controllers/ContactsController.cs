@@ -29,66 +29,117 @@ namespace ContactInformationCore.WebAPI.Controllers
 
         // GET: api/Contacts/5
         [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int? id)
         {
-            Contact contact = _IContact.ContactByID(id);
-
-            if (contact == null)
+            try
             {
-                return NotFound("The Skill record couldn't be found.");
-            }
+                if(id == null) { return BadRequest(); }
 
-            return Ok(contact);
+                Contact contact = _IContact.ContactByID(id);
+
+                if (contact == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(contact);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // PUT: api/Contacts/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Contact contactToUpdate)
+        public IActionResult Put(int? id, [FromBody] Contact contactToUpdate)
         {
-            if (contactToUpdate == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest("Contact is null.");
+                try
+                {
+                    if (contactToUpdate == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    Contact contact = _IContact.ContactByID(id);
+
+                    if (contactToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    _IContact.UpdateContact(contactToUpdate, contact);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName == "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+
+                    return BadRequest();
+                }
             }
-
-            Contact contact = _IContact.ContactByID(id);
-
-            if (contactToUpdate == null)
-            {
-                return NotFound("The Contact record couldn't be found.");
-            }
-
-            _IContact.UpdateContact(contactToUpdate,contact);
-            return NoContent();
+            return BadRequest();
         }
 
         // POST: api/Skills
         [HttpPost]
         public IActionResult Post([FromBody] Contact contact)
         {
-            if (contact == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest("Contact is null.");
-            }
+                try
+                {
+                    if (contact == null)
+                    {
+                        return BadRequest();
+                    }
 
-            _IContact.SaveContact(contact);
-            return CreatedAtRoute(
-                  "Get",
-                  new { Id = contact.Id },
-                  contact);
+                    _IContact.SaveContact(contact);
+
+                    if (contact.Id > 0)
+                        return CreatedAtRoute("Get", new { Id = contact.Id }, contact);
+                    else
+                        return NotFound();
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
         }
 
         // DELETE: api/Skills/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            Contact contact = _IContact.ContactByID(id);
-            if (contact == null)
+            int result = 0;
+            try
             {
-                return NotFound("The Contact record couldn't be found.");
-            }
+                if (id == null) { return BadRequest(); }
 
-            _IContact.DeleteContact(id);
-            return NoContent();
+                Contact contact = _IContact.ContactByID(id);
+                if (contact == null)
+                {
+                    return NotFound();
+                }
+
+                result = _IContact.DeleteContact(id);
+                if (result == 0)
+                {
+                    return BadRequest();
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ContactInformationCore.Model
     public class Contact
     {
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string First_Name { get; set; }
 

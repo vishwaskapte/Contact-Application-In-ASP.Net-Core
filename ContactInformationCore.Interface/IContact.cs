@@ -10,8 +10,8 @@ namespace ContactInformationCore.Interface
     {
         void SaveContact(Contact Contact);
         //IQueryable<Contact> ShowContact(string sortColumn, string sortColumnDir, string Search);
-        int DeleteContact(int id);
-        Contact ContactByID(int id);
+        int DeleteContact(int? id);
+        Contact ContactByID(int? id);
         void UpdateContact(Contact ContacttoUpdate, Contact Contact);
         //bool CheckEmailIsAlreadyExist(string DishName, string ContactType);
         List<Contact> GetAllContact();

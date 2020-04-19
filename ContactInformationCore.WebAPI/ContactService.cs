@@ -3,7 +3,6 @@ using ContactInformationCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
 
 namespace ContactInformationCore.WebAPI
 {
@@ -23,14 +22,14 @@ namespace ContactInformationCore.WebAPI
             _dataContext.SaveChanges();
         }
 
-        public int DeleteContact(int id)
+        public int DeleteContact(int? id)
         {
             Contact contact = _dataContext.Contacts.Find(id);
             _dataContext.Contacts.Remove(contact);
             return _dataContext.SaveChanges();
         }
 
-        public Contact ContactByID(int id)
+        public Contact ContactByID(int? id)
         {
             try
             {
@@ -48,7 +47,6 @@ namespace ContactInformationCore.WebAPI
             { 
                 if (ContacttoUpdate != null)
                 {
-                    Contact.Id = ContacttoUpdate.Id;
                     Contact.First_Name = ContacttoUpdate.First_Name;
                     Contact.Last_Name = ContacttoUpdate.Last_Name;
                     Contact.Email = ContacttoUpdate.Email;
