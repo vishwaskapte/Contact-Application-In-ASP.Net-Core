@@ -4,14 +4,16 @@ using ContactInformationCore.WebAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ContactInformationCore.WebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContaxt))]
-    partial class DatabaseContaxtModelSnapshot : ModelSnapshot
+    [Migration("20200423143044_4th")]
+    partial class _4th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

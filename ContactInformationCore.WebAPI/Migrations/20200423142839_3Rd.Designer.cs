@@ -4,14 +4,16 @@ using ContactInformationCore.WebAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ContactInformationCore.WebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContaxt))]
-    partial class DatabaseContaxtModelSnapshot : ModelSnapshot
+    [Migration("20200423142839_3Rd")]
+    partial class _3Rd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,15 +30,15 @@ namespace ContactInformationCore.WebAPI.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("First_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Last_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Phone_Number")
                         .IsRequired()
@@ -47,7 +49,8 @@ namespace ContactInformationCore.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Phone_Number");
+                    b.HasIndex("Id", "First_Name", "Last_Name", "Email", "Phone_Number", "Status")
+                        .IsUnique();
 
                     b.ToTable("Contacts");
                 });
